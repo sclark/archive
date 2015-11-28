@@ -1,0 +1,55 @@
+Transcription ()
+ DNA -> RNA
+ RNA polymerase
+  split H-Bonds
+  use one DNA strand as template
+  create RNA strand
+ 1. Initiation
+  RNA polymerase finds correct position (promoter) to start copying
+  promoter region - defines starting position for a gene by attracting RNA polymerase
+   always has TATA
+ 2. Elongation
+  RNA polymerase base pairs with DNA strand
+  adds onto 3' end of RNA
+  read from 3' to 5' on DNA
+  Ribonucleosides - ATP, UTP (replaces TTP), CTP, GTP
+ 3. Termination
+  sequence tells RNA polymerase to fall off
+  have RNA transcript for a gene
+ Cutting
+  DNA:     (promoter)(start codeon)(exon1)(interon1)(exon2)(interon2)(exon3)(stop codeon)(terminator) 5'
+  pre-RNA: (promoter)(start codeon)(exon1)(interon1)(exon2)(interon2)(exon3)(stop codeon)(terminator) 3'
+  mRNA:    (promoter)(start codeon)(exon1)----------(exon2)----------(exon3)-------------terminator) 3'
+  allows cutting and pasting of protein makeup
+ Prokaryotes vs Eucaryotes
+  Prokaryotes
+   Location: Cytoplasm
+   Gene Structure: No interons
+   Changes to mRNA: No caps or poly A's
+  Eucaryotes
+   Location: Cytoplasm and Neucleus
+   Gene Structure: Interons interrupt DNA sequence
+   Changes to mRNA: 5' caps and 3' poly A's
+ Interons
+  Discovery
+   Break H-bonds between DNA and add probe
+   some cases: probe binds to DNA perfectly as expected
+   some cases: probe binds but makes bubles (not binding to iteron)
+  Removal
+   snRNP "snerps" - Small Neuclear Ribo Neuclear Protein
+   Process
+    find splice sites and loop interon
+    snRNP bind to another snRNP to make loop of interon
+    cut loop out of mRNA
+   TODO: How does this allow mixing of exons?
+ Caps
+  added to mRNA
+  5': backwards Guanine (G cap)
+  3': poly A tail of varying length
+  protection from degredation
+ Genitic Code
+  use 3 RNA bases to create a amino acid
+  redundance allows for wobble (mistakes)
+  three stop codeons
+  one start codeon (only want to start once)
+  TODO: What is ribosome copies from the other strand of DNA, the RNA is different and therefore codes for a different protien (b/c only 64 one way possibilities)?

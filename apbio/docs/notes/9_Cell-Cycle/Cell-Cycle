@@ -1,0 +1,58 @@
+Cell Cycle (https://www.youtube.com/watch?v=A12zL7F66lg)
+ Control of System
+  decide to continue or stop 
+  G1 Checkpoint
+   most important
+   internal and external signals
+   determines if more cells are necesary
+    enters G0 on stop
+    continues Mitosis on go
+  G2 Checkpoint
+   DNA Synthesis complete
+   DNA damage
+    enters G2 on Go
+    waits to enter G2 on stop
+  M Checkpoint
+   determines if cell is ready to divide (all chromosomes attached)
+  Growth Factors
+   act at begining of S phase   
+   PDGF (Platelet Derived Growth Factor)
+    external signal to determine if more cells are necessary
+    repair injuries
+   Density Dependent Inhibition
+    must be attached to divide
+    must not be too tightly packed to divide
+   DNA damage
+   neutrient deficency
+  Experimentation
+   Cytoplasmic factors
+    S and G1 cells fused
+    both cells entered S phase
+    M and G1 cells fused
+    both cells entered M phase
+     how, DNA synthesis?
+  Process
+   Signals, Growth Factors, DNA damage (proto-oncagenes) -> CDK (Cyclin Dependent Kinase)
+    proto-oncagenes - regulate signals for division (receptiors)
+    oncagenes - mutant version of above (always on)
+    tumor supressor - regulates off signals for division (stop signal receptor)
+    regulated by cyclin (alosteric activator)
+     cycles in concentrations
+     above threshold, cell enters a phase
+    activates via phosphorilation
+    pair for each phase of cell cycle
+  Tumors
+   form with lack of stop signals or excess go signals
+   start with single cell
+   problematic when inhibitors no longer work
+   detached tumors can move when matasticized
+   attract blood vessels
+  Activities
+   Tumor flouresence
+    tumor cells have flourcent dye
+     seems that tumor cell inhibitor functions
+      fewer cells with tumor inhibitor dye than positive control
+   Cell Cycle phase identification
+ Apoptosis - programmed death
+  important for developemental phase, loss of webbing
+  important for tumor defence

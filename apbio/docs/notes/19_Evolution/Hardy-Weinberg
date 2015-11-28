@@ -1,0 +1,36 @@
+Hardy-Weinberg Equilibrium
+ allele+phenotype frequencies stay consistent generation to generation
+ 1. Large Population
+  small population - genetic drift - change due to chance
+   bottle neck effect - group of species is wiped out (natural disaster)
+   founder effect - group of species is separated and begins anew
+ 2. No Gene Flow
+  gene-flow - mixing with other species
+ 3. Random Mating
+  non-random mating - geography makes individuals more likely to mate
+ 4. No Natural Selection
+  natural selection - causes population to be better fit
+   sexual selection
+   heterozygote
+   sexual selection
+   stability
+   directional
+   disruptive
+ 5. No Mutation
+  mutation - adds alleles and genotypes
+ Equations
+  p + q = 1
+   p - frequency of dominant allele
+   q - frequency of recessive allele
+  p^2 + 2pq + q^2
+   p^2 - frequency of dominant genotype
+   2pq - frequency of heterozygote genotype
+   q^2 - frequency of recessive genotype
+  Ex: If 16% of a sheep population is white, what is the % of heterozygotes
+   q^2 = .16
+   q = .4
+   p = 1 - .4 = .6
+   2pq = 2(.6)(.4)=.48
+  Ex: If you have 600 sheep how many homozygous dominants
+   p^2=.6^2=.36
+   .36*600=216

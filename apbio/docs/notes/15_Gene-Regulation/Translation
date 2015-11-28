@@ -1,0 +1,32 @@
+Translation ()
+ tRNA - delivers amino acids
+  shaped like a T
+  single strand of RNA that is H-bonding
+  has anti-codon to attach to codon
+  amino acid is on opposite side
+ tRNA synthase - binds amino acid to tRNA
+  uses ATP and GTP
+ Ribosome
+  Structure
+   large and small subunits
+   E,P,A sites for exit,protein,acceptor respectively
+  Process
+   small subunti scans for AUG start codon before attaching large subunit
+   Creation of Amino Acid Chain
+    tRNA bindes to mRNA in A of Ribosome (if stop codon jump to Stop Codon)
+    amino acids betwen P and A sites conected with peptide bond using GTP
+    tRNA shifted down sites using GTP (A->P,P->E)
+    tRNA in E site leaves b/c nolonger attracted to mRNA
+    repeat until stop codon
+   Stop Codon
+    eventually binds Release factor to stop codon in site A releasing protein and breaking ribosomal subunits using 2 GTP
+     protein will fold
+   RoughER Synthesis (happens simultanious with Creation of Amino Acid Chain)
+     after ~12-18 amino acids atached
+     Signal Peptide at end of amino acid chain binds SRP (Signal Recognition Particle)
+     SRP drags Robosome and amino acid chain to SRP Receptor Protein (dock) on ROughER
+     Signal Peptide removed by SRP Receptor Protein (no start codon amino acid)
+ Bacteria
+  make RNA and translate immedieatly
+  many Ribosomes attached to mRNA from RNA polymerase (long chains)
+   allows for quick protein creation

@@ -1,0 +1,46 @@
+Photosynthesis (part 2) (http://www.youtube.com/watch?v=65QI3dB9UT0)
+ Photosystems (Z Scheme)
+  in Thylacoid Membrane
+  Photosystem 2 (PS 2)
+   Light -> eject e- (from Pigment Molecules)-> e- to Primary Electron Aceptor
+    H2O -> O + 2H+ + 2e- -^
+     replaces e- lost
+  ETC (see ETC notes)
+   H+ ions build up in Thylacoid space when compared to low H+ ion concentration in Stroma
+   e- -> ATP (via Oxadative Phosphorylation)
+  Photosystem 1 (PS 1)
+   Light -> eject e- (from Pigment Molecules)-> e- to Primary Electron Aceptor
+    2e- (from Photosystem 2) -^
+     replaces e- lost
+  Photosystem 2 (sometimes)
+   can accept e- from Photosystem 1 to make more ATP for Calvin Cycle
+  ETC (see ETC notes)
+   H+ ions build up in Thylacoid space when compared to low H+ ion concentration in Stroma
+   e- + NADP+ -> NADPH
+ Calvin Cycle
+  3CO2 + RuBP + 6ATP + 6NADPH -> G3P (energy)
+  Rubisco (RuBP Carboxalase)
+  Process
+   Carbon fixation: 3CO2 + RuBP -(Rubisco)> 3 6-carbon-chains
+   Reduction: 3 6-carbon-chains -> 6 3-carbon-chains + 6ATP -> 6 phosphorilated-3-carbon-chains + 6NADPH -> 6G3P
+   Regeneration of RuBP: 5G3P + 3ATP -> RuBP
+ Extreme Heat Environment
+  close stomata
+   disallow evaporation of water (will not wilt)
+   no O2 escape or CO2 to fuel reaction
+   Photo-respiration
+    Rubisco binds excess O2 to RuBP
+    RuBP carbons are useless
+  seperate CO2 from O2 to deal with problem
+  C4
+   two cells
+   Mesophyll Cell (O2 rich)
+    CO2 -> Organic Acid
+   Bundle-sheath Cell (O2 poor)
+    CO2 (from Mesophyll Cell) -> Calvin Cycle -> G3P
+  CAM
+   two cells
+   Night (O2 rich)
+    CO2 -> Organic Acid
+   Day (O2 poor)
+    CO2 (from Mesophyll Cell) -> Calvin Cycle -> G3P

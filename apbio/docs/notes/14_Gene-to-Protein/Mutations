@@ -1,0 +1,9 @@
+ mutations ()
+  silent - no change in protein
+   happens in 3rd base mostly
+  missense - amino acid changes
+   happens in 2nd base mostly therefore new amino acid
+  nonsense - make stop codon
+   kill a protein
+  frame-shift - add or delete a base and shift triplets
+   normally would start hitting stop codons
