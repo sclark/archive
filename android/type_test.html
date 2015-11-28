@@ -1,0 +1,24 @@
+<html>
+<head>
+<script>
+
+var browser_type=navigator.appName
+var browser_version=parseInt(navigator.appVersion)
+
+//if NS 6
+if (browser_type=="Netscape"&&browser_version>=5)
+window.location.replace("android.html")
+//if IE 4+
+else if (browser_type=="Microsoft Internet Explorer"&&browser_version>=4)
+window.location.replace("android.html")
+//if NS4+
+else if (browser_type=="Netscape"&&browser_version>=4)
+window.location.replace("android.html")
+//if Opera
+else if (browser_type=="Opera"&&browser_version>=1)
+window.location.replace("android.html")
+//Default goto page (NOT NS 4+ and NOT IE 4+)
+else
+window.location="android.html"
+</script>
+</html>
