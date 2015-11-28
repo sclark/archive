@@ -1,0 +1,80 @@
+<html> 
+<head>
+<noscript>
+<meta http-equiv="refresh" content="5; url=index.html">
+</noscript>
+
+<script>
+<!--
+  var version = parseInt(navigator.appVersion)
+  // replace is supported
+
+  if (version>=4 || window.location.replace)
+  setTimeout("window.location.replace('target.html')",15000);
+  else
+    window.location.href = "target.html"
+// -->
+</script>
+<script type="text/javascript">
+<!--
+
+var password;
+
+var correctpassword="Mom and Dad";
+
+password=prompt('Mom and Dad, please enter your password:','');
+
+if (password==correctpassword)
+   alert('It may take a few seconds to verify your membership! Click Ok To Continue...');
+else
+{
+   alert('Password Is Incorrect. Click Ok To Continue...');
+   window.location="http://www.google.com";
+}
+
+-->
+</script>
+</head> 
+<body  onload="startTime()" text="#000000" link="#023264" alink="#023264" vlink="#023264" leftmargin="0" marginwidth="0"> 
+<TABLE cellSpacing=0 cellPadding=0 width=730 border=0>  
+    <center><size="5"><color="black">
+ 
+  
+<BR> 
+                <B>Your Membership is being verified...</B> 
+ 
+                <BR> 
+<BR> 
+ <div id="divLocalTime"></div> 
+                <BR> 
+                Automatic refresh in <span id="spanTimer">5</span> seconds...
+</font> 
+             </td> 
+</p> 
+</CENTER>
+ 
+ <html> 
+<head> 
+
+<!--script language=JavaScript src="https://fgv.ups-scs.com/scripts/global.js" type=text/javascript></script--> 
+ <script type="text/javascript"> 
+  var Timer = 15
+  function startTime()
+  {
+    var today=new Date();
+ 
+    var weekday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+    var month=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+ 
+    var YYYY = today.getYear() < 1900 ? today.getYear() + 1900 : today.getYear();
+    var MM = today.getMonth() < 9 ? "0" + (today.getMonth() + 1) : today.getMonth() + 1;
+    var DD = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
+    var hh = today.getHours() < 10 ? "0" + today.getHours() : today.getHours();
+    var mm = today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
+    var ss = today.getSeconds() < 10 ? "0" + today.getSeconds() : today.getSeconds();
+ 
+    document.getElementById('divLocalTime').innerHTML="Current local time: "+weekday[today.getDay()]+", "+month[today.getMonth()]+" "+DD+", "+YYYY+" "+hh+":"+mm;
+    document.getElementById('spanTimer').innerHTML=Timer;
+    Timer--;
+ 
+    t=setTimeout('startTime()',

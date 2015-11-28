@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://opablo.com.ar/webgl/webgl3dplayer/ -->
+<html><!--
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    WebGL 3D video player experiment, Copyright (C) 2011 Pablo Odorico
+--><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> 
+<title>WebGL 3D Video Player</title>
+<style type="text/css">
+    body {
+        font: 13px/22px Helvetica, Arial, sans-serif;
+        background: #e0e0e0;
+    }
+</style>
+ 
+
+
+<!--Brandon Jones' glMatrix library-->
+<script type="text/javascript" src="./WebGL 3D Video Player_files/glMatrix-0.9.5.min.js"></script>
+
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    // A simple vertex shader
+
+    attribute vec3 aVertexPosition;
+    attribute vec2 aTextureCoord;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    varying vec2 vTextureCoord;
+
+    void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        vTextureCoord = aTextureCoord;
+    }
+</script>
+
+<script id="shader-fs-passthrough" type="x-shader/x-fragment">
+    // This fragment shader shows both frames side-by-side using the
+    // proper aspect-ratio
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+    varying vec2 vTextureCoord;
+    uniform int swap; // 1 to swap the left and right channels
+
+    uniform sampler2D uSampler;
+
+    void main(void) {
+        vec2 pos;
+        pos.s= swap==1 ? mod(vTextureCoord.s+0.5, 1.0) : vTextureCoord.s;
+        pos.t= vTextureCoord.t * 2.0 - 0.5; // Center the frame vertically
+
+        // Show in between black bands to avoid showing the texture clamping effect
+        gl_FragColor = (vTextureCoord.t>0.25 && vTextureCoord.t<0.75) ? texture2D(uSampler, pos) : vec4(0,0,0,1);
+    }
+</script>
+
+<script id="shader-fs-anaglyph" type="x-shader/x-fragment">
+    // This shader creates an anaglyph image from the side-by-side "youtube 3d formatted" frame
+    // The mathematical operation is quite straight forward: http://paulbourke.net/texture_colour/anaglyph/
+    // In this shader the channels can be inverted by inverting the uniform matrices
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+    varying vec2 vTextureCoord;
+
+    uniform sampler2D uSampler;
+    uniform mat3 leftMatrix;
+    uniform mat3 rightMatrix;
+
+    void main(void) {
+        vec2 leftPos=  vec2(vTextureCoord.s/2.0, vTextureCoord.t);
+        vec2 rightPos= vec2(vTextureCoord.s/2.0+0.5, vTextureCoord.t);
+
+        vec3 leftColor= texture2D(uSampler, leftPos).rgb;
+        vec3 rightColor= texture2D(uSampler, rightPos).rgb;
+
+        gl_FragColor = vec4(leftColor * leftMatrix + rightColor * rightMatrix, 1);
+    }
+</script>
+
+<script id="shader-fs-interleaved" type="x-shader/x-fragment">
+    // This shader creates a column/row "interleaved frame"
+
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+    varying vec2 vTextureCoord;
+
+    uniform int columns; // 1 for interleaved columns, 0 for interleaved rows
+    uniform int swap; // 1 to swap the left and right channels
+    uniform sampler2D uSampler;
+    uniform vec2 frameSize; // we need the frame size in pixels to detect whether a column/row is even/odd
+
+    void main(void) {
+        vec2 leftPos=  vec2(vTextureCoord.s/2.0, vTextureCoord.t);
+        vec2 rightPos= vec2(vTextureCoord.s/2.0, vTextureCoord.t);
+
+        if(swap == 0)
+            rightPos.s += 0.5;
+        else
+            leftPos.s += 0.5;
+
+        float toggleVar= (columns == 1) ? vTextureCoord.s * frameSize.x : vTextureCoord.t * frameSize.y;
+
+        vec2 pos= fract(toggleVar/2.0) < 0.5 ? leftPos : rightPos;
+
+        gl_FragColor = texture2D(uSampler, pos);
+    }
+</script>
+
+
+
+<script type="text/javascript">
+    var canvas;
+    var video;
+    var gl;
+
+    // Shader programs
+    var shaderAnaglyph;
+    var shaderPassthrough; // For the Side-by-side mode
+    var shaderInterleaved;
+    var shader; // Reference to the current shader being used
+
+    // Vertex Buffer Objects's for the video quad
+    var verticesBuffer;
+    var texCoordsBuffer;
+
+    // Video texture reference
+    var videoTexture;
+
+    var mvMatrix = mat4.create(); // Model View Matrix
+    var pMatrix = mat4.create(); // Projection Matrix (orthogonal in this case)
+
+    var timerInterval; // Timer reference for updating the frame
+
+    function drawScene() {
+        // The video is opaque and the webgl-canvas will be resized to the size of the video, so a
+        // gl.clear is not needed.
+
+        // Bind the VBO's and draw the Video quad as a triangle strip (no GL_QUADS in WebGL)
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, verticesBuffer);
+        gl.vertexAttribPointer(shader.vertexPositionAttribute, verticesBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordsBuffer);
+        gl.vertexAttribPointer(shader.textureCoordAttribute, texCoordsBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+        gl.bindTexture(gl.TEXTURE_2D, videoTexture);
+
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0,  verticesBuffer.numItems);
+    }
+
+    function initBuffers() {
+        // Create the VBOs for the Video Quad
+    
+        var vertices = [
+            1.0, 0.0, 0.0,
+            0.0, 0.0, 0.0,
+            1.0, 1.0, 0.0,
+            0.0, 1.0, 0.0
+        ];
+
+        verticesBuffer = gl.createBuffer();
+        verticesBuffer.itemSize = 3;
+        verticesBuffer.numItems = 4;
+        gl.bindBuffer(gl.ARRAY_BUFFER, verticesBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+        var texCoords = [
+             1.0, 1.0,
+             0.0, 1.0,
+             1.0, 0.0,
+             0.0, 0.0
+        ];
+
+        texCoordsBuffer = gl.createBuffer();
+        texCoordsBuffer.itemSize = 2;
+        texCoordsBuffer.numItems = 4;
+        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordsBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+    }
+
+    function getShader(gl, id) {
+        // Function from the Mozilla tutorials to get a shader from the DOM and compile it
+
+        var shaderScript = document.getElementById(id);
+
+        var theSource = "";
+        var currentChild = shaderScript.firstChild;
+        while(currentChild) {
+            if (currentChild.nodeType == 3)
+                theSource += currentChild.textContent;
+            currentChild = currentChild.nextSibling;
+        }
+
+        var shader;
+        if (shaderScript.type == "x-shader/x-fragment")
+            shader = gl.createShader(gl.FRAGMENT_SHADER);
+        else if (shaderScript.type == "x-shader/x-vertex")
+            shader = gl.createShader(gl.VERTEX_SHADER);
+        else
+            return null;
+
+        gl.shaderSource(shader, theSource);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            alert("An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader));
+            return null;
+        }
+
+        return shader;
+    }
+
+    function initShaders() {
+        // Create the shader programs
+    
+        shaderAnaglyph = gl.createProgram();
+        gl.attachShader(shaderAnaglyph, getShader(gl, "shader-vs"));
+        gl.attachShader(shaderAnaglyph, getShader(gl, "shader-fs-anaglyph"));
+        gl.linkProgram(shaderAnaglyph);
+        if(!gl.getProgramParameter(shaderAnaglyph, gl.LINK_STATUS))
+            alert("Unable to initialize the anaglyph shader program.");
+
+        shaderPassthrough = gl.createProgram();
+        gl.attachShader(shaderPassthrough, getShader(gl, "shader-vs"));
+        gl.attachShader(shaderPassthrough, getShader(gl, "shader-fs-passthrough"));
+        gl.linkProgram(shaderPassthrough);
+        if(!gl.getProgramParameter(shaderPassthrough, gl.LINK_STATUS))
+            alert("Unable to initialize the passthrough shader program.");
+
+        shaderInterleaved = gl.createProgram();
+        gl.attachShader(shaderInterleaved, getShader(gl, "shader-vs"));
+        gl.attachShader(shaderInterleaved, getShader(gl, "shader-fs-interleaved"));
+        gl.linkProgram(shaderInterleaved);
+        if(!gl.getProgramParameter(shaderInterleaved, gl.LINK_STATUS))
+            alert("Unable to initialize the interleaved shader program.");
+    }
+
+    function updateTexture() {
+        // This function will be called by the timer each time we expect a new frame
+        // AFAIK there is no "new frame event" in <video> in order to perform frame-accurate processing :(
+
+        gl.bindTexture(gl.TEXTURE_2D, videoTexture);
+
+        // Upload the current frame to the texture
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+        // The following parameters must be set otherwise it won't work
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+    
+        // Re-draw the scene
+        drawScene();
+    }
+
+    // Callback for the play/pause button
+    function playPause() {
+        var button= document.getElementById("playbutton");
+        button.textContent= video.paused ? "Pause" : "Play";
+
+        if(video.paused) {
+            video.play();
+            // Create an interval to upload and show the new frames
+            // AFAIK there is no mechanism for obtaining the native framerate of a <video>
+            timerInterval= setInterval(updateTexture, 1000/24);
+        } else {
+            video.pause();
+            clearInterval(timerInterval);
+        }
+    }
+
+    // Callback for the "Visualization method" combo box
+    function updateMethod() {
+        var index= document.getElementById("methodselect").selectedIndex;
+        var swapLeftRight= document.getElementById("swapchannels").checked;
+    
+        // Select shader
+        if(index==4)
+            shader= shaderPassthrough;
+        else if(index==5 || index==6)
+            shader= shaderInterleaved;
+        else
+            shader= shaderAnaglyph;
+
+        gl.useProgram(shader);
+
+        // Enable the vertex position and tex coords attributes
+        shader.vertexPositionAttribute = gl.getAttribLocation(shader, "aVertexPosition");
+        gl.enableVertexAttribArray(shader.vertexPositionAttribute);
+
+        shader.textureCoordAttribute = gl.getAttribLocation(shader, "aTextureCoord");
+        gl.enableVertexAttribArray(shader.textureCoordAttribute);
+
+        // Create an ortho projection matrix for the size of the video
+        mat4.ortho(0, canvas.width, 0, canvas.height, -1, 1, pMatrix);
+        mat4.identity(mvMatrix);
+        // Use the ModelView matrix to scale the 1-by-1 quad to the size of the video
+        mat4.scale(mvMatrix, [canvas.width, canvas.height, 1]);
+        // Upload the matrices
+        gl.uniformMatrix4fv(gl.getUniformLocation(shader, "uPMatrix"), false, pMatrix);
+        gl.uniformMatrix4fv(gl.getUniformLocation(shader, "uMVMatrix"), false, mvMatrix);
+
+        // Set the texture sampler
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, videoTexture);
+        gl.uniform1i(gl.getUniformLocation(shader, "uSampler"), 0);
+
+        // The side-by-side and interleaved modes have a "swap" uniform
+        if(index > 3)
+            gl.uniform1i(gl.getUniformLocation(shader, "swap"), swapLeftRight ? 1 : 0);
+
+        // The interleaved modes also need the frame size and weather to interleave columns or rows
+        if(index == 5 || index == 6) {
+            gl.uniform1i(gl.getUniformLocation(shader, "columns"), index==6 ? 1 : 0);
+            gl.uniform2fv(gl.getUniformLocation(shader, "frameSize"), [canvas.width, canvas.height]);
+        }
+
+        // The anaglyph modes need the left and right matrices for the transformation
+        if(index < 4) {
+            var leftMatrix;
+            var rightMatrix;
+
+            switch(index) {
+            case 0:
+                // Classic Red-Cyan anaglyph
+                leftMatrix= [  1.0,   0.0,   0.0,
+                               0.0,   0.0,   0.0,
+                               0.0,   0.0,   0.0 ];
+                rightMatrix= [ 0.0,   0.0,   0.0,
+                               0.0,   1.0,   0.0,
+                               0.0,   0.0,   1.0 ];
+                break;
+            case 1:
+                // Dobois-optimized Red-Cyan anaglyph
+                leftMatrix= [   0.456,  0.500,  0.176,
+                               -0.040, -0.038, -0.016,
+                               -0.015, -0.021, -0.005 ];
+                rightMatrix= [ -0.043, -0.088, -0.002,
+                                0.378, 0.734, -0.018,
+                               -0.072, -0.113, 1.226 ];
+                break;
+            case 2:
+                // Grayscale anaglyph
+                leftMatrix= [  0.299,   0.587,   0.114,
+                                 0.0,     0.0,     0.0,
+                                 0.0,     0.0,     0.0 ];
+                rightMatrix= [   0.0,     0.0,     0.0,
+                               0.299,   0.587,   0.114,
+                               0.299,   0.587,   0.114 ];
+                break;
+            case 3:
+            default:
+                // Deprecated Red/Blue anaglyph
+                leftMatrix= [  1.0,   0.0,   0.0,
+                               0.0,   0.0,   0.0,
+                               0.0,   0.0,   0.0 ];
+                rightMatrix= [ 0.0,   0.0,   0.0,
+                               0.0,   0.0,   0.0,
+                               0.0,   0.0,   1.0 ];
+                break;
+            }
+
+            // We can swap the channels by swapping the matrices
+            if(swapLeftRight) {
+                var temp= leftMatrix;
+                leftMatrix= rightMatrix;
+                rightMatrix= temp;
+            }
+
+            // Upload the matrices
+            var leftMatrixUniform = gl.getUniformLocation(shader, "leftMatrix");
+            var rightMatrixUniform = gl.getUniformLocation(shader, "rightMatrix");
+            gl.uniformMatrix3fv(leftMatrixUniform, false, leftMatrix);
+            gl.uniformMatrix3fv(rightMatrixUniform, false, rightMatrix);
+        }
+
+        // Re-draw the scene if the video is paused
+        if(video.paused)
+            drawScene();
+    }
+
+    function start() {    
+        canvas = document.getElementById("webgl-canvas");
+        video = document.getElementById("video");
+        // Hide the <video>
+        video.hidden= true;
+		video.muted= true;
+
+        gl = canvas.getContext("experimental-webgl");
+        if(!gl)
+            alert("Could not initialise WebGL.");
+
+        // Resize the webgl canvas to the size of the <video>
+        canvas.width= video.videoWidth;
+        canvas.height= video.videoHeight;
+
+        // Set the viewport
+        gl.viewport(0, 0, video.videoWidth, video.videoHeight);
+
+        // Create the texture reference for the frames
+        gl.enable(gl.TEXTURE_2D);
+        videoTexture= gl.createTexture();
+
+        // Initialize shaders and buffers
+        initShaders();
+        initBuffers();
+
+        // Set the default method
+        updateMethod();
+
+        drawScene();
+    }
+
+</script>
+
+</head><body onload="start()">
+    <h1>WebGL 3D Video Player</h1>
+
+    <p>
+    This HTML5+WebGL experiment utilizes GLSL shaders to perform real-time video processing on frames obtained from a hidden HTML5 <code>&lt;video&gt;</code> element. The purpose is to display a "YouTube 3D video" (side-by-side frames, width downsampled by 2) in different ways.
+    </p>
+    <p>
+    It currently supports most of YouTube's Flash 3D Player features including anaglyph, side-by-side and interleaved modes.
+    </p>
+	<p>
+    A modern browser such as Google Chrome 10 or Mozilla Firefox 4 is required.
+    </p>
+
+    <table style="margin-left: auto; margin-right: auto;">
+    <tbody><tr><td colspan="2">
+        <canvas id="webgl-canvas" style="border: none;" width="854" height="480">
+            Your browser does not support the HTML5 <code>canvas</code> element.
+        </canvas>
+    </td></tr>
+    <tr><td>
+        <button id="playbutton" type="button" onclick="playPause()">Play</button><br>
+    </td><td style="text-align: right;">
+        Mode:
+        <select id="methodselect" onchange="updateMethod()">
+            <option value="0">Red/Cyan Anaglyph</option>
+            <option value="1">Red/Cyan Dubois Anaglyph</option>
+            <option value="2">Red/Cyan Grayscale Anaglyph</option>
+            <option value="3">Red/Blue Anaglyph</option>
+            <option value="4">Side by side</option>
+            <option value="5">Interleaved rows</option>
+            <option value="6">Interleaved columns</option>			
+        </select>
+        <input id="swapchannels" type="checkbox" onchange="updateMethod()">Swap channels
+        <input id="showoriginal" type="checkbox" onchange="document.getElementById(&quot;video&quot;).hidden= !this.checked">Show input feed
+		<input id="mute" type="checkbox" onchange="document.getElementById(&quot;video&quot;).muted= this.checked" checked="">Mute
+    </td></tr>
+  
+    <tr><td colspan="2">
+    <video id="video" hidden="">
+        <source src="http://imaglabs.org/~pablo/webgl/YouTube_3D.webm" type="video/webm; codecs=&quot;vp8, vorbis&quot;">
+        Your browser doesn't support the HTML5 <code>video</code> element.
+    </video>
+    </td></tr>
+    </tbody></table>
+
+    <br><br>
+    <hr>
+    <table style="width: 100%">
+    <tbody><tr>
+	<td><a href="http://www.chromeexperiments.com/detail/3d-video-player/"><img src="./WebGL 3D Video Player_files/badge.png" alt="See my Experiment on ChromeExperiments.com"></a></td>
+	<td style="text-align: right; vertical-align: center;">
+    <a href="http://opablo.com.ar/">Pablo Odorico</a><br>
+    pablo.odorico@gmail.com
+    </td></tr>
+    </tbody></table>
+
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script><script src="./WebGL 3D Video Player_files/ga.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	var pageTracker = _gat._getTracker("UA-3582069-1");
+	pageTracker._initData();
+	pageTracker._trackPageview();
+	</scr

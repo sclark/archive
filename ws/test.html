@@ -1,0 +1,259 @@
+
+<html> 
+<head> 
+<title>Expanding images javascript. Thumbnails enlarge on mouseover.</title> 
+<meta name="Keywords"
+content="expanding images, images javascript, images enlarge on mouseover, thumbnails, thumbnails enlarge mouseover, "> 
+<meta name="Description"
+content="Expanding images javascript. The script makes thumbnails of images and enlarges the images on mouseover. The epanding images javascript is eaqst to install and configure."> 
+<meta name="Author" content="Tanya Puntti Australia"> 
+<meta name="GENERATOR" content="dreamweaver 3.0"> 
+<link rel="SHORTCUT ICON"
+href="http://www.hypergurl.com/favicon.ico"> 
+<script language="javascript" type="text/javascript"> 
+<!--
+var win=null;
+function NewWindow(mypage,myname,w,h,scroll,pos){
+if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
+if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
+else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPosition=20}
+settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=yes';
+win=window.open(mypage,myname,settings);}
+// -->
+</script> 
+<script
+language="JavaScript" type="Text/Javascript"><!--
+//  Hide script from older browsers
+ var urlAddress = "http://www.hypergurl.com/expandpic.html";
+ var pageName = "Expanding images javascript";
+ 
+ function addToFavorites()
+ {
+  if (window.external)
+  {
+   window.external.AddFavorite(urlAddress,pageName)
+  }
+  else
+  { 
+   alert("Sorry! Your browser doesn't support this function.");
+  }
+ }
+// -->
+</script> 
+<script
+language="JavaScript"><!--
+if (parent.frames.length>=1) {
+window.top.location.href="http://www.hypergurl.com/expandpic.html";
+}
+// -->
+</script> 
+<script language="JavaScript"> 
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+// -->
+</script> 
+<style type="text/css"> 
+<!--
+A:link {text-decoration:none}
+A:visited {text-decoration:none}
+A:hover{text-decoration:underline;}
+-->
+</style> 
+<script language="JavaScript"> 
+// Expanding images script copyright Matthew LaCerais MLacerais@osc.state.ny.us 
+// Distributed by hypergurl http://www.hypergurl.com
+// Permission to use script granted if above credits are left intact
+<!--
+function resizeImage(e)
+{
+	if (document.layers) { //Netscape 
+        var xMousePos = e.pageX;
+        var xMousePosMax = window.innerWidth+window.pageXOffset;
+    } else if (document.all) { // IE
+        var xMousePos = window.event.x+document.body.scrollLeft;
+	} else if (document.getElementById) {//Netscape
+		var xMousePos = e.pageX;
+        var xMousePosMax = window.innerWidth+window.pageXOffset;
+	}
+	var i = (-1 * (((xMousePos/340) - (250/340)) * ((xMousePos/340) - (250/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture1.width=(170 * i);
+	picture1.height=(125 * i);
+	
+	i = (-1 * (((xMousePos/340) - (420/340)) * ((xMousePos/340) - (420/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture2.width=(170 * i);
+	picture2.height=(125 * i);
+	
+	i = (-1 * (((xMousePos/340) - (525/340)) * ((xMousePos/340) - (525/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture3.width=(170 * i);
+	picture3.height=(125 * i);
+	
+	i = (-1 * (((xMousePos/340) - (600/340)) * ((xMousePos/340) - (600/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture4.width=(170 * i);
+	picture4.height=(125 * i);
+	
+	i = (-1 * (((xMousePos/340) - (680/340)) * ((xMousePos/340) - (680/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture5.width=(170 * i);
+	picture5.height=(125 * i);
+
+	i = (-1 * (((xMousePos/340) - (760/340)) * ((xMousePos/340) - (760/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture6.width=(170 * i);
+	picture6.height=(125 * i);
+
+	i = (-1 * (((xMousePos/340) - (840/340)) * ((xMousePos/340) - (840/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture7.width=(170 * i);
+	picture7.height=(125 * i);
+
+	i = (-1 * (((xMousePos/340) - (920/340)) * ((xMousePos/340) - (920/340)))) + 1;
+	if (i < .4) i = .4;
+	if (i > 2) i = 2;
+	picture8.width=(170 * i);
+	picture8.height=(125 * i);
+}
+ 
+function output(message)
+{
+	obj = eval("text");
+	obj.innerHTML = "<font size=\"6\">"+message+"</font>";
+}
+ 
+function handleMouse()
+{
+	if (document.layers) { // Netscape
+    	document.captureEvents(Event.MOUSEMOVE);
+	    document.onmousemove = resizeImage;
+	} else if (document.all) { // Internet Explorer
+	    document.onmousemove = resizeImage;
+	} else if (document.getElementById) { // Netcsape 6
+	    document.onmousemove = resizeImage;
+	}
+}
+ 
+function doNothing(e)
+{
+	var i = 0.4;
+	picture1.width=(170 * i);
+	picture1.height=(125 * i);
+	picture2.width=(170 * i);
+	picture2.height=(125 * i);
+	picture3.width=(170 * i);
+	picture3.height=(125 * i);
+	picture4.width=(170 * i);
+	picture4.height=(125 * i);
+	picture5.width=(170 * i);
+	picture5.height=(125 * i);
+	picture6.width=(170 * i);
+	picture6.height=(125 * i);
+	picture7.width=(170 * i);
+	picture7.height=(125 * i);
+	picture8.width=(170 * i);
+	picture8.height=(125 * i);
+}
+function ignoreMouse()
+{
+	if (document.layers) { // Netscape
+	    document.captureEvents(Event.MOUSEMOVE);
+    	document.onmousemove = doNothing;
+	} else if (document.all) { // Internet Explorer
+    	document.onmousemove = doNothing;
+	} else if (document.getElementById) { // Netcsape 6
+    	document.onmousemove = doNothing;
+	}
+}
+//-->
+</script> 
+</head> 
+ 
+<body bgcolor="#FFFFFF" link="#3333FF" vlink="#3333FF" alink="#3333FF"> 
+<script>
+//Encrypted Password script- By Rob Heslop
+//Script featured on Dynamic Drive 
+//Visit http://www.dynamicdrive.com 
+
+function submitentry(){
+password = document.password1.password2.value.toLowerCase()
+username = document.password1.username2.value.toLowerCase()
+passcode = 1
+usercode = 1
+for(i = 0; i < password.length; i++) {
+passcode *= password.charCodeAt(i);
+}
+for(x = 0; x < username.length; x++) {
+usercode *= username.charCodeAt(x);
+}
+//CHANGE THE NUMBERS BELOW TO REFLECT YOUR USERNAME/PASSWORD
+if(usercode==15902552097432000&&passcode==156339419557860000)
+
+//CHANGE THE NUMBERS ABOVE TO REFLECT YOUR USERNAME/PASSWORD
+{
+window.location=password+".htm"}
+
+alert("Welcome! You can now change user settings!")}
+
+else{
+
+
+alert("Welcome! 2You can now change user settings!")}
+}
+
+</script>
+
+<form name="password1">
+<strong>Enter username: </strong>
+<input type="text" name="username2" size="15">
+<br>
+<strong>Enter password: </strong>
+<input type="password" name="password2" size="15">
+
+<input type="button" value="Submit" onClick="submitentry()">
+</form>
+<script type='text/javascript' src='exmplmenu_var.js'></script> <script type='text/javascript' src='menu_com.js'></script> 
+ 
+      </h5> 
+      <p align="left"> 
+<table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td colspan="4" onMouseOver="ignoreMouse()"></td></tr> 
+<tr> <td width="8" height="140" valign="bottom" onMouseOver="ignoreMouse()"> </td><td width="142" valign="bottom" onMouseOver="handleMouse()"></td><td width="889" valign="bottom" onMouseOver="handleMouse()"><nobr> 
+<a href="index.html" target="_blank"><img name="picture1" src="image1.gif" width="68" height="50"onMouseOver="output('Home')" onMouseOut='output("")' border="0"></a> 
+<a href="about.html" target="_blank"><img name="picture2" src="image2.gif" width="68" height="50" onMouseOver="output('About')" onMouseOut='output("")' border="0"></a> 
+<a href="games.html" target="_blank"><img name="picture3" src="image3.gif" width="68" height="50"onMouseOver="output('Games')" onMouseOut='output("")' border="0"></a> 
+<a href="music.html" target="_blank"><img name="picture4" src="image4.gif" width="68" height="50"onMouseOver="output('Music')" onMouseOut='output("")' border="0"></a> 
+<a href="links.html" target="_blank"><img name="picture5" src="image5.gif" width="68" height="50"onMouseOver="output('Links')" onMouseOut='output("")' border="0"></a> 
+<a href="contact.html" target="_blank"><img name="picture6" src="image6.gif" width="68" height="50"onMouseOver="output('Contact')" onMouseOut='output("")' border="0"></a> 
+<a href="agree.html" target="_blank"><img name="picture7" src="image7.gif" width="68" height="50"onMouseOver="output('Agrement')" onMouseOut='output("")' border="0"></a> 
+<a href="nick.html" target="_blank"><img name="picture8" src="image8.gif" width="68" height="50"onMouseOver="output('Shows')" onMouseOut='output("")' border="0"></a> 
+
+
+</nobr></td><td width="3" valign="bottom" onMouseOver="ignoreMouse()">&nbsp;</td></tr> 
+<tr> <td height="10" colspan="4" onMouseOver="ignoreMouse()"></td></tr> </table><div id="text" name="text" style="position:absolute; left:166px; top:527px; width:665px; height:94px; z-index:1" onMouseOver="ignoreMouse()"></div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p> 
+      <table width="170" border="0" cellspacing="0" cellpadding="3" align="left"> 
+        <tr> 
+          <td>
+          </td> 
+        </tr> 
+      </table> 
+      <p>
+
+ </form><p><br>
+      <p> 
+
+        
+</script> 
+<img src="http://173.116.63.159:8080/shot.jpg" alt="Video feed

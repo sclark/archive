@@ -1,0 +1,153 @@
+<html>
+
+<head>
+
+<title>SnN Login</title>
+
+<style type="text/css">
+
+body {background: #777; font-family: sans-serif;}
+
+.B {background: #fff;margin: 9.5em;padding: 5px;border: 3px solid #000;}
+
+.C {width: 20em;margin: auto;margin-top: 4em;padding: 10px;}
+
+.S, .T {color: #fff;margin: -10px -10px 10px -10px;}
+
+.S {background: #393;padding: 2px 20px;font-size: 0.8em;}
+
+.T {background: #000;padding-left: 20px;font-weight: 700;}
+
+a {text-decoration: none;}
+
+a:hover {text-decoration: underline;}
+
+</style>
+<script type="text/javascript">
+
+function CharCode(str, ch) {
+
+	var space = " ";
+	var chars = ",-.";
+	var digit = "0123456789";
+	var lower = "abcdefghijklmnopqrstuvwxyz";
+	var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	code = space.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 32;
+
+	code = chars.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 44;
+
+	code = digit.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 48;
+
+	code = lower.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 97;
+
+	code = upper.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 65;
+
+	return -1;
+
+	}
+
+function ShowGrades() {
+
+	var ch = 0, len = 0, pos = 0, code = 0, total1 = 0, total2 = 0;
+
+	id  = document.authorization.password.value;
+	len = id.length;
+
+	if (len <= 2) id = id + id;
+	if (len <= 4) id = id + id;
+	if (len <= 6) id = id + id;
+
+	pos = 15;
+	len = id.length;
+
+	for (ch = 0; ch <= len - 1; ch++) {
+
+		code = CharCode(id, ch);
+
+		if ((code == 32               ) ||
+			(code >= 44 && code <=  46) ||
+			(code >= 48 && code <=  57) ||
+		    (code >= 65 && code <=  90) ||
+		    (code >= 97 && code <= 122)) {
+
+			pos    += 1;
+			total1 += pos * (code - 31);
+
+			}
+
+		}
+
+	name = document.authorization.username.value;
+	len  = name.length;
+	pos  = 31;
+
+	for (ch = 0; ch <= len - 1; ch++) {
+
+		code = CharCode(name, ch);
+
+		if ((code == 32               ) ||
+			(code >= 44 && code <=  46) ||
+			(code >= 65 && code <=  90) ||
+		    (code >= 97 && code <= 122)) {
+
+			pos    += 1;
+			total2 += pos * (code - 31);
+
+			}
+
+		}
+
+	url = total1 * total2 + ".html";
+	window.location = url;
+
+	return false;
+
+	}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="B C"><div class="T">Login</div>
+
+<div class="S">Welcome to the new website!<br/>Powered by SnN</div>
+
+<center>
+<form action="" name="authorization" onsubmit="return ShowGrades()">
+
+
+	
+
+	
+
+	<td width="300">
+	Username: <input name="username" size="20" maxlength="15" type="text">
+	</td></tr>
+
+	<br>
+
+	<td width="300">
+	Password: <input name="password" size="20" maxlength="15" type="password">
+	</td></tr>
+
+	<br>
+
+	<tr><td colspan="2" align="center" width="420">
+	<input name="grades" value="Login" type="submit">
+	
+
+<br>
+<br>
+If you are having trouble logging in please ask Stephen for help!
+</form>
+</form>
+
+</di

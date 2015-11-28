@@ -1,0 +1,60 @@
+body{
+font: normal 90% Times New Roman;
+background-image: url("butterfly.jpg");
+}
+
+#scriptheader{
+color: navy;
+background-image: none;
+background-color: transparent;
+}
+
+/* A:link    { color: #1A2BFF }     unvisited links */
+
+/* ######### Top Section ######### */
+
+#toprightdivbox a{
+color: #6A85B5;
+}
+
+#toprightdivbox a:hover{
+color: #6D6969;
+}
+
+
+/* ######### Top Tabs ######### */
+
+
+#ddtoptabs a, #ddtoptabs strong{
+background: transparent url("tabs_left_blue.gif") no-repeat left top;
+}
+
+#ddtoptabs a span, #ddtoptabs #current span{
+background: transparent url("tabs_right_blue.gif") no-repeat right top;
+}
+
+
+#ddtoptabsline{
+background: #4D699D;
+}
+
+
+/* ######### Left Menu ######### */
+
+.categorylinks li a{
+font-family: Verdana;
+color: navy;
+}
+
+#leftbar .headers{
+background-color: #4D699D;
+}
+
+.categorylinks a:visited{color: navy; }
+.categorylinks a:hover {	color: #fff;	background: blue; text-decoration: none; }
+
+
+#footer{
+background: transparent url(gradientblue.jpg) repeat-x;
+}
+

@@ -1,0 +1,572 @@
+<html>
+<head>
+<title>Mom and Dad's Page</title>
+
+<!--        Script by hscripts.com          -->
+<!--        copyright of HIOX INDIA         -->
+<!-- more scripts @ http://www.hscripts.com -->
+
+<script type="text/javascript">
+var rev = "fwd";
+function titlebar(val)
+{
+	var msg  = "Mom and Dad";
+	var res = " ";
+	var speed = 100;
+	var pos = val;
+
+	msg = "   ---> "+msg+" <---";
+	var le = msg.length;
+	if(rev == "fwd"){
+		if(pos < le){
+		pos = pos+1;
+		scroll = msg.substr(0,pos);
+		document.title = scroll;
+		timer = window.setTimeout("titlebar("+pos+")",speed);
+		}
+		else{
+		rev = "bwd";
+		timer = window.setTimeout("titlebar("+pos+")",speed);
+		}
+	}
+	else{
+		if(pos > 0){
+		pos = pos-1;
+		var ale = le-pos;
+		scrol = msg.substr(ale,le);
+		document.title = scrol;
+		timer = window.setTimeout("titlebar("+pos+")",speed);
+		}
+		else{
+		rev = "fwd";
+		timer = window.setTimeout("titlebar("+pos+")",speed);
+		}	
+	}
+}
+
+titlebar(0);
+</script>
+<!--   Script by hscripts.com     -->
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+<style type="text/css">
+
+.drag{
+position:relative;
+cursor:hand;
+z-index: 100;
+}
+
+</style>
+
+<script type="text/javascript">
+
+/***********************************************
+* Drag and Drop Script: © Dynamic Drive (http://www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit http://www.dynamicdrive.com/ for this script and 100s more.
+***********************************************/
+
+var dragobject={
+z: 0, x: 0, y: 0, offsetx : null, offsety : null, targetobj : null, dragapproved : 0,
+initialize:function(){
+document.onmousedown=this.drag
+document.onmouseup=function(){this.dragapproved=0}
+},
+drag:function(e){
+var evtobj=window.event? window.event : e
+this.targetobj=window.event? event.srcElement : e.target
+if (this.targetobj.className=="drag"){
+this.dragapproved=1
+if (isNaN(parseInt(this.targetobj.style.left))){this.targetobj.style.left=0}
+if (isNaN(parseInt(this.targetobj.style.top))){this.targetobj.style.top=0}
+this.offsetx=parseInt(this.targetobj.style.left)
+this.offsety=parseInt(this.targetobj.style.top)
+this.x=evtobj.clientX
+this.y=evtobj.clientY
+if (evtobj.preventDefault)
+evtobj.preventDefault()
+document.onmousemove=dragobject.moveit
+}
+},
+moveit:function(e){
+var evtobj=window.event? window.event : e
+if (this.dragapproved==1){
+this.targetobj.style.left=this.offsetx+evtobj.clientX-this.x+"px"
+this.targetobj.style.top=this.offsety+evtobj.clientY-this.y+"px"
+return false
+}
+}
+}
+
+dragobject.initialize()
+
+</script>
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+<script type="text/javascript" src="dolphin.js">
+
+/***********************************************
+* Dolphin Tabs Menu- by JavaScript Kit (www.javascriptkit.com)
+* Menu interface by: http://www.13styles.com/css-menus/dolphin/
+* Visit JavaScript Kit at http://www.javascriptkit.com/ for this script and 100s more
+***********************************************/
+
+</script>
+
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="sagscroller.css" />
+
+<script src="sagscroller.js">
+
+/***********************************************
+* SAG Content Scroller- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Visit http://www.dynamicDrive.com for hundreds of DHTML scripts
+* This notice must stay intact for legal use
+***********************************************/
+
+</script>
+
+<style type="text/css">
+
+/* #SAG scroller demo #1 */
+
+div#mysagscroller{
+width: 200px;  /*width of scroller*/
+height:250px;
+}
+
+div#mysagscroller ul li{
+background:navy;
+color:white;
+padding:5px;
+margin-bottom:5px; /*bottom spacing between each LI*/
+}
+
+div#mysagscroller ul li:first-letter{
+font-size:28px;
+background:white;
+color:black;
+padding:0 2px;
+margin-right:2px;
+}
+
+
+/* #SAG scroller demo #2 */
+
+div#mysagscroller2{
+width: 250px; /*width of scroller*/
+height:300px;
+border:7px solid #C0C0C0;
+}
+
+div#mysagscroller2 ul li img{
+border-width:0;
+display:block; /*this causes each image to be flush against each other*/
+}
+
+</style>
+
+<script>
+
+//SAG scroller demo #1:
+
+var sagscroller1=new sagscroller({
+	id:'mysagscroller',
+	mode: 'manual' //<--no comma following last option
+})
+
+//SAG scroller demo #2:
+
+var sagscroller2=new sagscroller({
+	id:'mysagscroller2',
+	mode: 'auto',
+	pause: 2500,
+	animatespeed: 400 //<--no comma following last option
+})
+
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="default.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="blue-theme" href="user.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="brown-theme" href="user2.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="butterfly-theme" href="butterfly.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="nature-theme" href="nature.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="red-theme" href="red.css" />
+<link rel="alternate stylesheet" type="text/css" media="screen" title="yellow-theme" href="yellow.css" />
+
+
+
+<script src="styleswitch.js" type="text/javascript">
+</head>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<body bgcolor="#black" background="christmas_town.jpg"> 
+<SCRIPT type="text/javascript"> 
+/*Script distributed by Hypergurl.com
+Visit http://www.hypergurl.com/easyhtml.html
+  for this script and many more
+*/
+ 
+//Pre-loads your image/s below
+//Configure below - change URL path to the snow image
+ 
+grphcs=new Array(6)
+Image0=new Image();
+Image0.src=grphcs[0]="snow2.gif";
+Image1=new Image();
+Image1.src=grphcs[1]="snow2.gif"
+Image2=new Image();
+Image2.src=grphcs[2]="snow2.gif"
+Image3=new Image();
+Image3.src=grphcs[3]="snow2.gif"
+Image4=new Image();
+Image4.src=grphcs[4]="snow2.gif"
+Image5=new Image();
+Image5.src=grphcs[5]="snow2.gif"
+ 
+//Smoothness depends on image file size, 
+//the smaller the size the more you can use!
+ 
+// Configure below - change number of snow to render
+Amount=112; 
+ 
+Ypos=new Array();
+Xpos=new Array();
+Speed=new Array();
+Step=new Array();
+Cstep=new Array();
+ns=(document.layers)?1:0;
+ns6=(document.getElementById&&!document.all)?1:0;
+ 
+if (ns){
+	for (i = 0; i < Amount; i++){
+		var P=Math.floor(Math.random()*grphcs.length);
+		rndPic=grphcs[P];
+		document.write("<LAYER NAME='sn"+i+"' LEFT=0 TOP=0><img src="+rndPic+"></LAYER>");
+	}
+}
+else{
+	document.write('<div style="position:absolute;top:0px;left:0px"><div style="position:relative">');
+	for (i = 0; i < Amount; i++){
+		var P=Math.floor(Math.random()*grphcs.length);
+		rndPic=grphcs[P];
+		document.write('<img id="si'+i+'" src="'+rndPic+'" style="position:absolute;top:0px;left:0px">');
+	}
+	document.write('</div></div>');
+}
+WinHeight=(ns||ns6)?window.innerHeight:window.document.body.clientHeight;
+WinWidth=(ns||ns6)?window.innerWidth-70:window.document.body.clientWidth;
+for (i=0; i < Amount; i++){
+	Ypos[i] = Math.round(Math.random()*WinHeight);
+	Xpos[i] = Math.round(Math.random()*WinWidth);
+	Speed[i]= Math.random()*5+3;
+	Cstep[i]=0;
+	Step[i]=Math.random()*0.1+0.05;
+}
+function fall(){
+	var WinHeight=(ns||ns6)?window.innerHeight:window.document.body.clientHeight;
+	var WinWidth=(ns||ns6)?window.innerWidth-70:window.document.body.clientWidth;
+	var hscrll=(ns||ns6)?window.pageYOffset:document.body.scrollTop;
+	var wscrll=(ns||ns6)?window.pageXOffset:document.body.scrollLeft;
+	for (i=0; i < Amount; i++){
+		sy = Speed[i]*Math.sin(90*Math.PI/180);
+		sx = Speed[i]*Math.cos(Cstep[i]);
+		Ypos[i]+=sy;
+		Xpos[i]+=sx;
+		if (Ypos[i] > WinHeight){
+			Ypos[i]=-60;
+			Xpos[i]=Math.round(Math.random()*WinWidth);
+			Speed[i]=Math.random()*5+3;
+		}
+		if (ns){
+			document.layers['sn'+i].left=Xpos[i];
+			document.layers['sn'+i].top=Ypos[i]+hscrll;
+		}
+		else if (ns6){
+			document.getElementById("si"+i).style.left=Math.min(WinWidth,Xpos[i]);
+			document.getElementById("si"+i).style.top=Ypos[i]+hscrll;
+		}
+		else{
+			eval("document.all.si"+i).style.left=Xpos[i];
+			eval("document.all.si"+i).style.top=Ypos[i]+hscrll;
+		}
+		Cstep[i]+=Step[i];
+	}
+	setTimeout('fall()',115);
+}
+window.onload=fall
+//-->
+</SCRIPT> <script type="text/javascript"> 
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17766058-1']);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script> 
+<center>
+
+
+<table bgcolor="#FFFFFF" width="1250" cellspacing="0" cellpadding="0" style="padding-top: 10px; padding-bottom: 10px;">
+<tr>
+<td align="center">
+<front face="arial" size="1">
+<strong>
+<marquee direction="right" bgcolor="#E0FFFF">Mom and Dad, Thank You for using Stephen's Computer!</marquee>
+</strong>
+
+<div id="dolphincontainer">
+	<div id="dolphinnav">
+	<ul>
+	<li><a href="index.html" rel="home"><span>Home</span></a></li>
+	<li><a href="about.html" rel="about"><span>About Us</span></a></li>
+	<li><a href="games.html" rel="games"><span>Games</span></a></li>
+	<li><a href="music.html" rel="music"><span>Music</span></a></li>
+	<li><a href="links.html" rel="links"><span >Links</span></a></li>
+	<li><a href="contact.html" rel="contact"><span>Contact Us</span></a></li>
+	<li><a href="agree.html" rel="agree"><span>User Agrement</span></a></li>
+	<li><a href="nickl.html" rel="shows"><span>Shows</span></a></li>
+	</ul>
+	</div>
+	<center>
+
+	<!-- Sub Menus container. Do not remove -->
+	<div id="dolphin_inner">
+
+	<div id="home" class="innercontent">
+	Go back to the home page.
+	</div>
+
+	<div id="about" class="innercontent">
+	Find out about future releases and more info about this website.
+	</div>
+
+	<div id="games" class="innercontent">
+	More games are now avaliable under new games!
+	</div>
+
+	<div id="music" class="innercontent">
+	More music is now avaliable!
+	</div>
+
+
+	<div id="links" class="innercontent">
+	The Torrey Terminators Live Video Streaming form thier competition!
+	</div>
+
+
+	<div id="contact" class="innercontent">
+	Contact the web developer and ask for more content or more features.
+	</div>
+
+
+	<div id="agree" class="innercontent">
+	Check to make shure you agree with the user agrement.
+	</div>
+
+
+	<div id="shows" class="innercontent">
+	Watch TV shows!
+	</div>
+
+	<!-- End Sub Menus container -->
+	</div>
+
+	</div>
+
+<script type="text/javascript">
+
+//dolphintabs.init("ID_OF_TAB_MENU_ITSELF", SELECTED_INDEX)
+dolphintabs.init("dolphinnav", 1)
+
+</script>
+</font>
+</td>
+</tr>
+</table>
+
+<table width="1250" cellspacing="0" cellpadding="0" style="padding-top: 10px; padding-bottom: 10px;">
+<tr>
+<td style="padding-left: 5px; padding-right: 5px;" bgcolor="#000000" valign="top" width="450">
+
+
+
+
+
+
+
+<font face="arial" color="#000000" size="3">
+<br>
+
+<marquee direction="up" bgcolor="#E0FFFF" scrollamount="2" height=325><center>
+
+Happy New Year!
+<br>
+________________
+<br>
+<br>
+The New Holiday Menu Bar has been released and other features have been released to the user accounts!
+<br>
+________________
+<br>
+<br>
+Try the new dragable images! This image is draggable!
+<br>
+<img src="santa.gif" class="drag"/>
+</marquee>
+<br>
+<br>
+<center>
+<br>
+<font face="arial" color="#FFFFFF" size="3">
+Backround Picture
+<form id="switchform">
+<select name="switchcontrol" size="1" onChange="chooseStyle(this.options[this.selectedIndex].value, 60)">
+<option value="none" selected="selected">Christmas</option>
+<option value="blue-theme">Blue</option>
+<option value="brown-theme">Green</option>
+<option value="red-theme">Red</option>
+<option value="yellow-theme">Yellow</option>
+<option value="butterfly-theme">Butterfly</option>
+<option value="nature-theme">Nature</option>
+</select>
+</form>
+</font>
+</td>
+<td width="2" bgcolor="#FFFFFF">&nbsp;
+
+</td>
+<td bgcolor="#000000" width="748" valign="top">
+<font face="arial" color="#FFFFFF" size="4">
+<center>
+By continuing to use this computer you are agreeing to the User Agreement! (see link)
+<br>
+<p align="center">
+<object
+width="320"
+height="260"
+classid="CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95"
+hspace="0"
+border="5">
+<param
+name="vid.mp4" value="vid.mp4" />
+<param
+name="AutoStart"
+value="True" />
+<param
+name="ShowControls"
+value="False" />
+<param
+name="ShowStatusBar"
+value="True" />
+<param
+name="ShowDiplay"
+value="False" />
+<param
+name="AutoRewind"
+value="True" />
+<embed
+width="480"
+height="375"
+hspace="5"
+filename=
+"VIDFILE"
+autostart="True"
+showcontrols="True"
+showstatusbar="True"
+showdiplay="True"
+autorewind="True"
+border="5"
+src= 
+"vid.mp4"></embed> </object>
+</p>
+
+</center>
+
+<td width="2" bgcolor="#FFFFFF">&nbsp;
+
+</td>
+<td bgcolor="#000000" valign="top" width="150">
+<font face="arial" color="#FFFFFF" size="4">
+
+
+
+<div id="mysagscroller2" class="sagscroller">
+	<ul><center>
+	<li><a href="#"><img src="jungle.jpg"/></a></li>
+	<li><a href="#"><img src="flower.jpg"/></a></li>
+	<li><a href="#"><img src="wave.jpg"/></a></li>
+	<li><a href="#"><img src="ctree.gif"/></a></li>
+	</ul>
+</div>
+<br>
+<center>
+<script>
+<!--
+function remote(){
+/*Credit: JavaScript Kit www.javascriptkit.com more JavaScripts here.*/
+win2=window.open("remotemd.htm","","width=120,height=225,scrollbars")
+win2.creator=self
+}
+//-->
+</script>
+<form>
+<input type="button" value="Remote" onClick="remote()">
+</form>
+<script>
+<!--
+function calender(){
+/*Credit: JavaScript Kit www.javascriptkit.com more JavaScripts here.*/
+win2=window.opencalender/calender.htm","","width=600,height=450,scrollbars")
+win2.creator=self
+}
+//-->
+</script>
+<form>
+<input type="button" value="Calender" onClick="calender()">
+</form>
+</center>
+</font>
+</td>
+</tr>
+</t
