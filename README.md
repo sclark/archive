@@ -5,5 +5,6 @@ This repository has some projects and websites I made back in middle and high sc
 + [android](http://sclark.io/archive/android): middle school, starting with android
 + [biofuelscrm](http://sclark.io/archive/biofuelscrm): middle school project on types of energy (created with Renata Muller)
 + [hercstephen](http://sclark.io/archive/hercstephen): middle school project on Ancient Rome
++ [hyperspace](http://sclark.io/archive/hyperspace): high school overly complicated (but still cool) login page
 + [voting](http://sclark.io/archive/voting): high school instant run-off election web app
 + [ws](http://sclark.io/archive/ws): middle school personal website
