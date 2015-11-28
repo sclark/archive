@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<?php session_start(); ?>
+<html>
+<head>
+	<title>Vote4Office</title>
+	<meta charset="utf-8">
+	<style media="screen" type="text/css">
+	#loginbox {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+	 background: rgb(100, 149, 237);
+	 background: rgba(100, 149, 237, .5);
+	}
+	#loginbox div {
+     width:300px;
+     margin: 100px auto;
+     background-color: #fff;
+     border:10px solid #000;
+     padding:25px;
+     text-align:center;
+	}
+	</style>
+</head>
+<body>
+	<?php 
+							if (isset($_SESSION['user']))
+								echo "<li><a href='logout.php'>Logout</a></li>";
+							else
+								echo "<li><a href='#' onclick='loginbox()'>Log In</a></li>";
+						?>
+</body>
+</html>

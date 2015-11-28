@@ -1,0 +1,8 @@
+CREATE TABLE votes(rank int NOT NULL AUTO_INCREMENT, SC int, RP int, KA int, DS int, PRIMARY KEY (rank));
+INSERT INTO votes(SC, RP, KA, DS) values(0, 0, 0, 0);
+INSERT INTO votes(SC, RP, KA, DS) values(0, 0, 0, 0);
+INSERT INTO votes(SC, RP, KA, DS) values(0, 0, 0, 0);
+
+UPDATE votes SET SC=1 WHERE rank=1
+
+SELECT SC FROM `votes` WHERE rank=1
